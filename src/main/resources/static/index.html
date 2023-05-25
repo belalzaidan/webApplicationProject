@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bestilling</title>
+</head>
+<body>
+    <script src="script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <h1>Ny bestilling</h1>
+ <table>
+    <tr>
+        <td>Navn</td>
+        <td>
+            <label for="navn"></label><input type="text" id="navn">
+        <td id="feilnavn" style="color: red"></td>
+    </tr>
+
+     <tr>
+         <td>Mobil</td>
+         <td>
+             <input type="text" id="phone">
+         <td id="feilmobil" style="color: red"></td>
+         </td>
+     </tr>
+
+    <tr>
+        <td>E-post</td>
+        <td>
+            <input type="text" id="email">
+        <td id="feilepost" style="color: red"></td>
+        </td>
+    </tr>
+
+     <tr>
+         <td>Bord</td>
+         <td>
+             <input type="number" id="bord">
+         <td id="feilbord" style="color: red"></td>
+         </td>
+     </tr>
+
+     <tr>
+         <td>Varer</td>
+         <td>
+             <input type="text" id="vare">
+         <td id="feilvare" style="color: red"></td>
+         </td>
+     </tr>
+
+
+ </table>
+
+<div>
+    <button onclick="lagreBestilling()">Send Bestilling</button>
+    <a id="melding" style="color: green"></a>
+</div>
+
+
+</body>
+</html>
