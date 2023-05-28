@@ -47,12 +47,7 @@ public class ApplicationController {
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping("/checkEmail/{email}")
-    public boolean checkEmail (@PathVariable String email){
-        List<Reservation> reservation = rep.findByEmail(email);
-        return reservation.isEmpty();
-    }
-
+    /*
     @PostMapping("/savePerson")
     public void savePerson (Person innPerson) {prep.saveHashed(innPerson);}
 
@@ -60,6 +55,6 @@ public class ApplicationController {
     public boolean sjekkPerson (@PathVariable String username, @PathVariable String password){
         return prep.checkPassword(username, password);
     }
-
+    */
 
 }
