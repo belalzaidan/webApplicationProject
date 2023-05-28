@@ -2,45 +2,59 @@ package com.example.ordinaer2022;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class ApplicationController {
 
     // public List<Bestilling> bestillinger = new ArrayList<>();
     @Autowired
-    BestillingRepo rep;
+    ReservationRepo rep;
 
     @Autowired
     PersonRepo prep;
 
-    @GetMapping("/sjekk")
-    public String sjekk(){
+    @GetMapping("/checkStatus")
+    public String checkStatus(){
         return "OK";
     }
 
 
 
-    @PostMapping("/lagre")
-    public void lagreBestilling (Bestilling innBestilling){
-        rep.save(innBestilling);
+    @PostMapping("/save")
+    public void saveReservation (Reservation innReservation){
+        rep.save(innReservation);
     }
 
-    @GetMapping("/sjekk/{telefon}")
-    public boolean sjekkTelefon (@PathVariable String telefon){
-        List<Bestilling> bestilling = rep.findByTelefon(telefon);
-        return bestilling.isEmpty();
+    @GetMapping("/check")
+    public ResponseEntity<Map<String, Boolean>> checkPhoneAndEmail
+            (@RequestParam("phone") String phone, @RequestParam("email") String email) {
+        List<Reservation> reservationsByPhone = rep.findByPhone(phone);
+        List<Reservation> reservationsByEmail = rep.findByEmail(email);
+
+        boolean phoneExists = !reservationsByPhone.isEmpty();
+        boolean emailExists = !reservationsByEmail.isEmpty();
+
+        Map<String, Boolean> result = new HashMap<>();
+        result.put("phoneExists", phoneExists);
+        result.put("emailExists", emailExists);
+
+        return ResponseEntity.ok(result);
     }
 
-    @PostMapping("/lagrePerson")
-    public void lagrePerson (Person innPerson) {prep.saveHashed(innPerson);}
+    @GetMapping("/checkEmail/{email}")
+    public boolean checkEmail (@PathVariable String email){
+        List<Reservation> reservation = rep.findByEmail(email);
+        return reservation.isEmpty();
+    }
+
+    @PostMapping("/savePerson")
+    public void savePerson (Person innPerson) {prep.saveHashed(innPerson);}
 
     @GetMapping("/sjekkPerson")
     public boolean sjekkPerson (@PathVariable String username, @PathVariable String password){

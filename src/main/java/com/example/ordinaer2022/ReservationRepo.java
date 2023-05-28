@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface BestillingRepo extends JpaRepository<Bestilling,Long> {
-    List<Bestilling> findByTelefon(String telefon);
+public interface ReservationRepo extends JpaRepository<Reservation,Long> {
+    List<Reservation> findByPhone(String phone);
+    List<Reservation> findByEmail(String email);
 }

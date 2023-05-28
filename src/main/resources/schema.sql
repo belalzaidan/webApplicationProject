@@ -1,14 +1,14 @@
-CREATE TABLE bestillinger (
+CREATE TABLE reservations (
   id int AUTO_INCREMENT NOT NULL PRIMARY KEY,
-  navn varchar(255),
-  epost varchar(255),
-  telefon varchar(255),
-  vare integer,
-  bord varchar(255)
+  nameOfCustomer varchar(255),
+  email varchar(255),
+  phone varchar(255),
+  tableOfCustomer Integer,
+  item varchar(255)
 );
 
 CREATE TABLE person (
     id int AUTO_INCREMENT NOT NULL PRIMARY KEY,
     username varchar(255),
     password varchar(255)
-)
+);

@@ -1,82 +1,89 @@
-function valideringNavn (navn){
+function validationName (name){
     const regexp = /^[a-zA-ZæøåÆØÅ. \-]{2,20}$/;
-    if(!regexp.test(navn)){
-        $("#feilnavn").html("يا خرا شنو هذا")
+    if(!regexp.test(name)){
+        $("#failName").html("Bad validation")
         return false;
     }
     else
-        $("#feilnavn").html("")
+        $("#failName").html("")
         return true;
 }
 
-function valideringEpost (epost){
+function validationEmail (email){
     const regexp = /^[a-zA-Z.@ 0-9\-]{2,20}$/;
-    if(!regexp.test(epost)){
-        $("#feilepost").html("يا خرا شنو هذا")
+    if(!regexp.test(email)){
+        $("#failEmail").html("Bad validation")
         return false;
     }
     else
-        $("#feilepost").html("")
+        $("#failEmail").html("")
     return true;
 
 }
 
-function valideringTelefon (telefon){
+function validationPhone (phone){
     const regexp = /^[0-9]{3,8}$/;
-    if(!regexp.test(telefon)){
-        $("#feitelefon").html("يا خرا شنو هذا")
+    if(!regexp.test(phone)){
+        $("#failPhone").html("Bad validation")
         return false;
     }
     else
-        $("#feiltelefon").html("")
+        $("#failPhone").html("")
     return true;
 
 }
 
-function valideringBord (bord){
+function validationTable (table){
     const regexp = /^[0-50]{1,2}$/;
-    if(!regexp.test(bord)){
-        $("#feilbord").html("يا خرا شنو هذا")
+    if(!regexp.test(table)){
+        $("#failTable").html("Bad validation")
         return false;
     }
     else
-        $("#feilbord").html("")
+        $("#failTable").html("")
     return true;
 
 }
 
-function valideringVare (vare){
+function validationItems (item){
     const regexp = /^[0-9]{0,8}$/;
-    if(!regexp.test(vare)){
-        $("#feilvare").html("يا خرا شنو هذا")
+    if(!regexp.test(item)){
+        $("#failItem").html("Bad validation")
         return false;
     }
     else
-        $("#feilvare").html("")
+        $("#failItem").html("")
     return true;
 
 }
 
-function lagreBestilling(){
+function display(id, message, timeout){
+    $("#" + id).html(message).fadeIn();
+    setTimeout(function() {
+        $("#" + id).fadeOut();
+    }, timeout);
+}
+
+function saveReservation(){
     // navn = $("#navn").val();
     // mobil = $("#phone").val();
     // email = $("#email").val();
     // bord = $("#bord").val();
     // vare = $("#vare").val();
 
-    navnOk = valideringNavn($('#navn').val());
-    telefonOk = valideringTelefon($('#phone').val());
-    epostOk = valideringEpost($('#email').val());
-    bordOk = valideringBord($('#bord').val());
-    vareOk = valideringVare($('#vare').val());
+    nameOk = validationName($('#name').val());
+    phoneOk = validationPhone($('#phone').val());
+    emailOk = validationEmail($('#email').val());
+    tableOk = validationTable($('#table').val());
+    itemOk = validationItems($('#items').val());
 
-    if(navnOk && telefonOk && epostOk && bordOk && vareOk){
-        let bestilling = {
-            navn: $('#navn').val(),
-            telefon: $('#phone').val(),
-            epost: $('#email').val(),
-            bord: $('#bord').val(),
-            vare: $('#vare').val()
+    if(nameOk && phoneOk && emailOk && tableOk && itemOk){
+        let reservation = {
+            name: $('#name').val(),
+            phone: $('#phone').val(),
+            email: $('#email').val(),
+            table: $('#table').val(),
+            item: $('#items').val()
         };
 
        // $.ajax({
@@ -87,17 +94,20 @@ function lagreBestilling(){
          //       $("#melding").html("Bestilling er sendt")
          //   }
        // })
-        $.get("/sjekk/" + $("#phone").val(), function (data){
-            if(!data){
-                $("#melding").html("Telefonnummeret er allerede i bruk")
-            }
-            else
-                $.post("/lagre",bestilling, function (){
-                    $("#melding").html("Bestilling er sendt")
-                    console.log(bestilling)
+        $.get("/check", {phone: $("#phone").val(), email: $("#email").val() } , function (data){
+            if (data.phoneExists && data.emailExists) {
+                display("message", "Phone number and email are already in use", 3000);
+            } else if (data.phoneExists) {
+                display("message", "Phone number is already in use", 3000);
+            } else if (data.emailExists) {
+                display("message", "Email is already in use", 3000);
+            } else
+                $.post("/save",reservation, function (){
+                    display("message", "Reservation is sent", 3000);
+                    console.log(reservation)
                 }) .fail(function (jqXHR){
-                        const json = $.parseJSON(jqXHR.responseText);
-                        $('#melding').html("Internal Server Error, Try again later")
+                    const json = $.parseJSON(jqXHR.responseText);
+                    $('#message').html("Internal Server Error, Try again later")
                     console.log(json.message)
                 });
         })
@@ -105,7 +115,7 @@ function lagreBestilling(){
 
     }
     else
-        $("#melding").html("something went wrong")
-    console.log(navnOk, telefonOk, epostOk, bordOk,vareOk);
+        $("#message").html("something went wrong")
+    console.log(nameOk, phoneOk, emailOk, tableOk,itemOk);
 
 }
