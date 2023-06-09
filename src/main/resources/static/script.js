@@ -46,7 +46,7 @@ function validationTable (table){
 }
 
 function validationItems (item){
-    const regexp = /^[0-9]{0,8}$/;
+    const regexp = /^[0-9,]{0,8}$/;
     if(!regexp.test(item)){
         $("#failItem").html("Bad validation")
         return false;
@@ -115,7 +115,7 @@ function saveReservation(){
 
     }
     else
-        $("#message").html("something went wrong")
+        display("message","Something went wrong", 3000);
     console.log(nameOk, phoneOk, emailOk, tableOk,itemOk);
 
 }
