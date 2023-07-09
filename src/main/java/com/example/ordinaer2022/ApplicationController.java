@@ -2,9 +2,14 @@ package com.example.ordinaer2022;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +29,17 @@ public class ApplicationController {
         return "OK";
     }
 
+    @RequestMapping(value = "{path:[^\\.]*}")
+    public RedirectView redirect404() {
+        return new RedirectView("/error/404");
+    }
 
+    @GetMapping("/error/404")
+    public ResponseEntity<String> handle404Error() throws IOException {
+        Resource resource = new ClassPathResource("static/404-error-page.html");
+        String content = new String(Files.readAllBytes(resource.getFile().toPath()));
+        return ResponseEntity.ok().body(content);
+    }
 
     @PostMapping("/save")
     public void saveReservation (Reservation innReservation){

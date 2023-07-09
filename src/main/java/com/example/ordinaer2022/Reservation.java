@@ -3,15 +3,15 @@ package com.example.ordinaer2022;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "reservations")
+@Table(name = "Reservations")
 public class Reservation {
 
     @Id
     @GeneratedValue
     private int id;
 
-    @Column(name = "nameOfCustomer")
-    private String nameOfCustomer;
+    @Column(name = "name_Of_Customer")
+    private String name_Of_Customer;
 
     @Column(name = "phone")
     private String phone;
@@ -19,18 +19,18 @@ public class Reservation {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "tableOfCustomer")
-    private int tableOfCustomer;
+    @Column(name = "table_Of_Customer")
+    private int table_Of_Customer;
+
 
     @Column(name = "item")
     private String item;
 
     public Reservation(String name, String phone, String email, int table, String item){
-        this.id = id;
-        this.nameOfCustomer= name;
+        this.name_Of_Customer= name;
         this.phone = phone;
         this.email = email;
-        this.tableOfCustomer = table;
+        this.table_Of_Customer = table;
         this.item = item;
     }
 
@@ -45,11 +45,11 @@ public class Reservation {
     }
 
     public String getName() {
-        return nameOfCustomer;
+        return name_Of_Customer;
     }
 
     public void setName(String name) {
-        this.nameOfCustomer = name;
+        this.name_Of_Customer = name;
     }
 
     public String getPhone() {
@@ -69,11 +69,11 @@ public class Reservation {
     }
 
     public int getTable() {
-        return tableOfCustomer;
+        return table_Of_Customer;
     }
 
     public void setTable(int table) {
-        this.tableOfCustomer = table;
+        this.table_Of_Customer = table;
     }
 
     public String getItem() {

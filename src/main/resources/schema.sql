@@ -1,9 +1,9 @@
-CREATE TABLE reservations (
+CREATE TABLE Reservations (
   id int AUTO_INCREMENT NOT NULL PRIMARY KEY,
-  nameOfCustomer varchar(255),
+  name_Of_Customer varchar(255),
   email varchar(255),
   phone varchar(255),
-  tableOfCustomer Integer,
+  table_Of_Customer Integer,
   item varchar(255)
 );
 

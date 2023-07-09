@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Reservation</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <script src="script.js"></script>
@@ -11,38 +12,43 @@
     <h1>New Reservation</h1>
  <table>
     <tr>
-        <td>Name</td>
+        <td class="label">Name</td>
         <td>
-            <label for="name"></label><input type="text" id="name">
-        <td id="failName" style="color: red"></td>
+            <input type="text" id="name">
+        <td id="failName" class="warning"></td>
+        </td>
     </tr>
 
      <tr>
-         <td>Phone</td>
+         <td class="label">Phone</td>
          <td>
-             <label for="phone"></label><input type="text" id="phone">
-            <td id="failPhone" style="color: red"></td>
+             <input type="text" id="phone">
+            <td id="failPhone" class="warning"></td>
+         </td>
      </tr>
 
     <tr>
-        <td>Email</td>
+        <td class="label">Email</td>
         <td>
-            <label for="email"></label><input type="text" id="email">
-        <td id="failEmail" style="color: red"></td>
+            <input type="text" id="email">
+        <td id="failEmail" class="warning"></td>
+        </td>
     </tr>
 
      <tr>
-         <td>Table</td>
+         <td class="label">Table</td>
          <td>
-             <label for="table"></label><input type="number" id="table">
-         <td id="failTable" style="color: red"></td>
+             <input type="number" id="table">
+         <td id="failTable" class="warning"></td>
+         </td>
      </tr>
 
      <tr>
-         <td>Items</td>
+         <td class="label">Items</td>
          <td>
-             <label for="items"></label><input type="text" id="items">
-         <td id="failItems" style="color: red"></td>
+             <input type="text" id="items">
+         <td id="failItem" class="warning"></td>
+         </td>
      </tr>
 
 

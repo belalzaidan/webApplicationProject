@@ -46,7 +46,7 @@ function validationTable (table){
 }
 
 function validationItems (item){
-    const regexp = /^[0-9,]{0,8}$/;
+    const regexp = /^[0-9,]{2,8}$/;
     if(!regexp.test(item)){
         $("#failItem").html("Bad validation")
         return false;
@@ -59,42 +59,32 @@ function validationItems (item){
 
 function display(id, message, timeout){
     $("#" + id).html(message).fadeIn();
-    setTimeout(function() {
-        $("#" + id).fadeOut();
-    }, timeout);
+    if (timeout !== 0) {
+        setTimeout(function() {
+            $("#" + id).fadeOut();
+        }, timeout);
+    }
 }
 
 function saveReservation(){
-    // navn = $("#navn").val();
-    // mobil = $("#phone").val();
-    // email = $("#email").val();
-    // bord = $("#bord").val();
-    // vare = $("#vare").val();
 
-    nameOk = validationName($('#name').val());
-    phoneOk = validationPhone($('#phone').val());
-    emailOk = validationEmail($('#email').val());
-    tableOk = validationTable($('#table').val());
-    itemOk = validationItems($('#items').val());
+    let nameOk = validationName($("#name").val());
+    let phoneOk = validationPhone($('#phone').val());
+    let emailOk = validationEmail($('#email').val());
+    let tableOk = validationTable($("#table").val());
+    let itemOk = validationItems($("#items").val());
 
     if(nameOk && phoneOk && emailOk && tableOk && itemOk){
         let reservation = {
-            name: $('#name').val(),
+            name_Of_Customer: $('#name').val(),
             phone: $('#phone').val(),
             email: $('#email').val(),
-            table: $('#table').val(),
+            table_Of_Customer: $('#table').val(),
             item: $('#items').val()
         };
 
-       // $.ajax({
-         //   url: "/lagre",
-         //   method: "POST",
-         //   data: bestilling,
-         //   success: function (){
-         //       $("#melding").html("Bestilling er sendt")
-         //   }
-       // })
-        $.get("/check", {phone: $("#phone").val(), email: $("#email").val() } , function (data){
+
+        $.get("/check", {phone: $('#phone').val(), email: $('#email').val() } , function (data){
             if (data.phoneExists && data.emailExists) {
                 display("message", "Phone number and email are already in use", 3000);
             } else if (data.phoneExists) {
@@ -107,7 +97,7 @@ function saveReservation(){
                     console.log(reservation)
                 }) .fail(function (jqXHR){
                     const json = $.parseJSON(jqXHR.responseText);
-                    $('#message').html("Internal Server Error, Try again later")
+                    display('message',"Internal Server Error, Try again later", 3000);
                     console.log(json.message)
                 });
         })
@@ -115,7 +105,23 @@ function saveReservation(){
 
     }
     else
-        display("message","Something went wrong", 3000);
+        display('message',"Something went wrong", 3000);
     console.log(nameOk, phoneOk, emailOk, tableOk,itemOk);
 
 }
+
+
+// name = $("#navn").val();
+// mobile = $("#phone").val();
+// email = $("#email").val();
+// table = $("#bord").val();
+// item = $("#vare").val();
+
+// $.ajax({
+//   url: "/save",
+//   method: "POST",
+//   data: reservation,
+//   success: function (){
+//       $("#melding").html("Reservation is sent")
+//   }
+// })
