@@ -5,6 +5,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -25,7 +28,11 @@ public interface PersonRepo extends JpaRepository <Person,Long> {
 
     }
 
+
+
     Person findByUsername(String username);
     List<Person> findByPassword(String password);
+
+
 
 }

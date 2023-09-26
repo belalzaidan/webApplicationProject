@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class Reservation {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "name_Of_Customer")

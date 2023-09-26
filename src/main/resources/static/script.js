@@ -23,6 +23,7 @@ function validationEmail (email){
 
 function validationPhone (phone){
     const regexp = /^[0-9]{3,8}$/;
+    console.log("Phone number: " + phone);
     if(!regexp.test(phone)){
         $("#failPhone").html("Bad validation")
         return false;
